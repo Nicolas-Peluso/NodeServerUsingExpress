@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/Nicolas-beginner/NodeServerUsingExpress#readme",
   "dependencies": {
-    "express": "^4.17.2"
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "md5": "^2.3.0"
   }
 }

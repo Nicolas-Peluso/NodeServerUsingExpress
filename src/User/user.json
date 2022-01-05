@@ -1,3 +1,9 @@
 {
-    "users": []
+ "users": [
+  {
+   "Nome": "Nicolas",
+   "Email": "NicolasTeste@insominia.com",
+   "Senha": "2a2c353dd9977e2404fecb3bf088ed6e"
+  }
+ ]
 }
