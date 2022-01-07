@@ -2,8 +2,13 @@
  "users": [
   {
    "Nome": "Nicolas",
-   "Email": "NicolasTeste@insominia.com",
-   "Senha": "2a2c353dd9977e2404fecb3bf088ed6e"
+   "Email": "NicolasPeluso.contato.bazinga",
+   "Senha": "83fc41c602ce4b6e535f1b757a36d3f7"
+  },
+  {
+   "Nome": "Paulo Henrrique chagas",
+   "Email": "PaulaTejanto@kiss.ot",
+   "Senha": "7ddc2138960e2b0e241716645dc62e36"
   }
  ]
 }
