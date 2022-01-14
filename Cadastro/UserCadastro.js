@@ -1,26 +1,19 @@
 module.exports = class UserCadastro {
-    constructor() {
-        this.fs = require("fs")
-        this.path = require("path")
+    constructor(WriteingInFile) {
         this.userRegister = require("../src/User/user.json")
         this.MD5Encripter = require("md5")
+        this.WriteingInFile = WriteingInFile
+
+        this.path = require("path")
+        this.fs = require("fs")
+
     }
 
-    WriteingInFile() {
-        this.fs.writeFile(
-            this.path.join(__dirname, "../src/User/user.json"),
-            JSON.stringify(this.userRegister, null, 1),
-            () => {
-                return true
-            }
-        )
-    }
 
     PostarUser(req, res) {
         try {
-            const Nome = req.body.Nome
-            const Email = req.body.Email
-            let Senha = req.body.Senha
+            const { Nome, Email, Senha } = req.body
+
             const id = Math.floor(Math.random() * (30000 - 0 + 1)) + 1
             //verificando o corpo da requisisao
             if (req.body == {} || Nome === "" || Email === "" || Senha === "") throw new Error("Algum Dos Campos Estão Vazio")
@@ -36,7 +29,7 @@ module.exports = class UserCadastro {
             //Inserindo No arquivo json 
             this.userRegister.users.push({ Nome, Email, Senha: this.MD5Encripter(Senha), id })
 
-            this.WriteingInFile()
+            this.WriteingInFile(this.path.join(__dirname, "../src/User/user.json"), this.userRegister)
 
             res.status(200).json({ "message": "usuario cadastrado" })
         } catch (err) {
@@ -46,10 +39,8 @@ module.exports = class UserCadastro {
 
     EditUser(req, res) {
         try {
-            const Email = req.body.Email
-            const Senha = req.body.Senha
-            let NewSenha = req.body.NovaSenha
-            const NewEmail = req.body.NovoEmail
+            const { Email, Senha, NewEmail, NewSenha } = req.body
+
             if (Email === "" || Senha === "") throw new Error("Prencha todos os campos")
             if (typeof Email !== "string" || typeof NewEmail !== "string") throw new Error("Email e/ou novo Email devem ser string")
 
@@ -68,8 +59,7 @@ module.exports = class UserCadastro {
             const keys = ["Email", "Senha"]
             keys.forEach(key => this.userRegister.users[HasUser.Index][key] = HasUser["new" + key])
 
-            this.WriteingInFile()
-
+            this.WriteingInFile(this.path.join(__dirname, "../src/User/user.json"), this.userRegister)
             return res.json({ "message": "Usuario Editado com sucesso" })
         }
         catch (err) {
@@ -78,8 +68,7 @@ module.exports = class UserCadastro {
     }
     DeleteUser(req, res) {
         try {
-            const Email = req.body.Email
-            const Senha = req.body.Senha
+            const { Email, Senha } = req.body
 
             if (Email === "" || Senha === "") throw new Error("Prencha todos os campos")
             //se o usuario nao bater com algum do banco
@@ -92,10 +81,10 @@ module.exports = class UserCadastro {
 
             if (HasUser.Email == null) throw new Error("Email Nao Registrado")
             if (HasUser.Senha == null) throw new Error("senha invalida")
-            delete this.userRegister.users[HasUser.Index]
 
-            this.WriteingInFile()
+            this.userRegister.users.splice(HasUser.Index)
 
+            this.WriteingInFile(this.path.join(__dirname, "../src/User/user.json"), this.userRegister)
             res.json({ "message": "Usuario Deletado" })
         } catch (err) {
             res.json({ "message": `${err}` })

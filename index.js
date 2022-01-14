@@ -3,14 +3,55 @@ const express = require("express")
 const cors = require("cors")
 const app = express()
 const Port = 4000
+const fs = require("fs")
+let TempName = ""
+
+const multer = require("multer")
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, __dirname + '/src/Postagem/picture')
+    },
+    filename: (req, file, cb) => {
+        const extensão = file.originalname.split('.')[1]
+
+        const NomeNovoFile = require("crypto")
+            .randomBytes(64)
+            .toString('hex')
+
+        cb(null, `${NomeNovoFile}.${extensão}`)
+        TempName = `${NomeNovoFile}.${extensão}`
+    }
+})
+const Upload = multer({ storage })
+
+function WriteingInFile(caminho, arquivo) {
+    fs.writeFile(
+        caminho,
+        JSON.stringify(arquivo, null, 1),
+        () => {
+            return true
+        }
+    )
+}
+
 
 //Class UserCadastro
 const User = require("./Cadastro/UserCadastro.js")
-const UserCadastro = new User()
+const UserCadastro = new User(WriteingInFile)
+
+//Class Cadstro de Postagem 
+const PostagemCadastro = require("./cadastrarPostagem/cadastrarPOstagem.js")
+const Postagem = new PostagemCadastro(WriteingInFile)
 
 //COnfigurando Padrao
 app.use(express.json())
+app.use(express.urlencoded({
+    extended: true
+}))
 app.use(cors())
+
+
 
 //Rotas
 //Criar um usuario
@@ -30,13 +71,20 @@ app.put("/user/Edit", (req, res) => {
     res.header("Access-Control-Allow-Origin", "*")
     UserCadastro.EditUser(req, res)
 })
-
 app.delete("/user/delete", (req, res) => {
     //Definindo o tipo de Conteudo que deve ser recebido aqui
     res.contentType("application/json")
     //Definindo qual aplicação pode fazer requisições nesse caso qualquer uma
     res.header("Access-Control-Allow-Origin", "*")
     UserCadastro.DeleteUser(req, res)
+})
+
+app.post("/postagem", Upload.single("foto"), (req, res) => {
+    Postagem.PostarPostagem(req, res, TempName)
+})
+
+app.get("/postagem/get", (req, res) => {
+    Postagem.SendPostagens(res)
 })
 
 app.listen(Port, () => {
