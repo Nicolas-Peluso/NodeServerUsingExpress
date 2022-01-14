@@ -10,7 +10,7 @@ const multer = require("multer")
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, __dirname + '/src/Postagem/picture')
+        cb(null, __dirname + '/public/picture')
     },
     filename: (req, file, cb) => {
         const extensão = file.originalname.split('.')[1]
@@ -35,7 +35,6 @@ function WriteingInFile(caminho, arquivo) {
     )
 }
 
-
 //Class UserCadastro
 const User = require("./Cadastro/UserCadastro.js")
 const UserCadastro = new User(WriteingInFile)
@@ -50,8 +49,7 @@ app.use(express.urlencoded({
     extended: true
 }))
 app.use(cors())
-
-
+app.use(express.static("public"))
 
 //Rotas
 //Criar um usuario

@@ -9,10 +9,11 @@ module.exports = class Cadastrar {
         try {
             const { Descricao } = req.body
 
-            this.POstagemRegister.Postagem.push({ Descrição: Descricao, Foto: Name })
+            this.POstagemRegister.Postagem.push({ Descrição: Descricao, Foto: "http://localhost:4000/picture/" + Name })
 
             this.WriteingInFile(this.path.join(__dirname, '../src/Postagem/Postagem.json'), this.POstagemRegister)
             res.json({ "message": "Postagem Feita Com Sucesso" })
+            Name = ""
         }
         catch (err) {
             res.json({ "message": err })
