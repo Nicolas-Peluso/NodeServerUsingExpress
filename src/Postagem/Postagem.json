@@ -1,16 +1,8 @@
 {
  "Postagem": [
   {
-   "Descrição": "Imagem numero 2",
-   "Foto": "http://localhost:4000/picture/21c62e2469729e57cf0cd831b578ceab79d3c713b34f7a2cee6f5fecfa9db5a425019ce68dee0386c7052a2f68340cf75d3f2b0d8cbdb23c6c3d9413714753dd.png"
-  },
-  {
-   "Descrição": "Imagem numero 3",
-   "Foto": "http://localhost:4000/picture/4f5043081b75e24bee4272eb8afacc26a1dbdb02de19b3c9949342a94474355e8351e7545829ccad1de6cbfb78fd110c534ee9c947a57dff698a746fcd311dec.png"
-  },
-  {
    "Descrição": "Imagem numero 4",
-   "Foto": "http://localhost:4000/picture/68591d91b929bd535881727a82a3d7eb5c33d64fe71175bcc030f007d57647b359c87f447eae5087fe283e955209d58ffec01f52957eb01114531ebb58a88b9a.png"
+   "Foto": "http://localhost:4000/picture/d7f19ffe907f4d6ad0bc019875a7728502c6cbdf9639a02699ed29da44b6ef60f466d7aff2f464bd172457c05b559ede33dcd1fac3a1a8b15f3bd7b26527f4d5.png"
   }
  ]
 }
