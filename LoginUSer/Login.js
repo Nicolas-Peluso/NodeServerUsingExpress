@@ -27,7 +27,7 @@ module.exports = class Login {
                 expiresIn: 1200
             })
 
-            res.json({ "message": "Usuario Logado Com Sucesso", "TOKEN": Token })
+            res.json({ "message": "Usuario Logado Com Sucesso", "TOKEN": Token, "Id": Id })
         }
         catch (err) {
             res.json({ "message": `${err}` })

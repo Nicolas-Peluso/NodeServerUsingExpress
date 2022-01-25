@@ -44,7 +44,7 @@ function JWTVerify(req, res, next) {
     const token = tokenCru.split(' ')[1]
     if (!token) return res.json({ "message": "Token nao recebido" })
     JsonWebToken.verify(token, process.env.SECRET, (err, decode) => {
-        if (err) return res.json({ "message": "falaha na autenticação" })
+        if (err) return res.json({ "message": "falha na autenticação" })
 
         next()
     })
