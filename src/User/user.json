@@ -1,39 +1,12 @@
 {
  "users": [
   {
-   "Nome": "Paulo Henrrique chagas",
-   "Email": "PaulaTejanto@kiss.ot",
-   "Senha": "8ae6acf263ec10b0fc5fa3ed85bce7f5",
-   "id": null
-  },
-  {
-   "Nome": "Paulo Henrrique chagas",
-   "Email": "PauloHenrrdsdsdiqueChagas126@gmail.com",
-   "Senha": "248698d0841cf61fad3d0e4e6d538fda",
-   "id": 22659
-  },
-  {
-   "Nome": "Paulo Henfddrrique chagas",
-   "Email": "PaulaTesssssdssjasntsso@kiss.ot",
-   "Senha": "8b38310d8bd8e720e23bfcebb90224a3",
-   "id": 2576
-  },
-  {
-   "Nome": "Paulo Henfddrrique chagas",
-   "Email": "PaulaTesssssdssjasnstsso@kiss.ot",
-   "Senha": "8b38310d8bd8e720e23bfcebb90224a3",
-   "id": 14802
-  },
-  {
-   "Nome": "Paulo Henfddrrique chagas",
-   "Email": "PaulaTesssssdsddsssfffdssjasnstsnnnnsddddo@kiss.ot",
-   "Senha": "8b38310d8bd8e720e23bfcebb90224a3",
-   "id": 10472
-  },
-  {
-   "Nome": "Paulo Henfddrrique chagas",
-   "Email": "ddddddd@email.com",
-   "id": 18750
+   "Nome": "Nicolas Peluso",
+   "Email": "nicolaspelsuosssssssss@djkdjk.com",
+   "Senha": "c66bd0c2bc03ae9c31f82fff04578369",
+   "id": 22948,
+   "Avatar": "http://localhost:4000/picture/fb7a569c8cd17a5c451a114ce43e01709ed6908d43341a0ff8c80d9ed7a4ddbacfe802f0b8bb399a41fd98c81416cc54e86f51839f17a3d07a260bb6f8034855.jpg",
+   "UserName": "NicolasPaulao"
   }
  ]
 }

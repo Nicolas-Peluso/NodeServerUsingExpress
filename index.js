@@ -53,13 +53,13 @@ app.use(express.static("public"))
 
 //Rotas
 //Criar um usuario
-app.post("/user/register", (req, res) => {
+app.post("/user/register", Upload.single("Avatar"), (req, res) => {
     //Definindo o tipo de Conteudo que deve ser recebido aqui
     res.contentType("application/json")
     //Definindo qual aplicação pode fazer requisições nesse caso qualquer uma
     res.header("Access-Control-Allow-Origin", "*")
     //Recebndo os parametros em forma de json da requisição
-    UserCadastro.PostarUser(req, res)
+    UserCadastro.PostarUser(req, res, TempName)
 })
 //Editar usuario
 app.put("/user/Edit", (req, res) => {

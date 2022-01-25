@@ -3,16 +3,12 @@ module.exports = class UserCadastro {
         this.userRegister = require("../src/User/user.json")
         this.MD5Encripter = require("md5")
         this.WriteingInFile = WriteingInFile
-
         this.path = require("path")
-        this.fs = require("fs")
-
     }
 
-
-    PostarUser(req, res) {
+    PostarUser(req, res, TempName) {
         try {
-            const { Nome, Email, Senha } = req.body
+            const { Nome, Email, Senha, UserName } = req.body
 
             const id = Math.floor(Math.random() * (30000 - 0 + 1)) + 1
             //verificando o corpo da requisisao
@@ -27,8 +23,8 @@ module.exports = class UserCadastro {
 
             if (HasUser.Email !== null) throw new Error("Email Ja existe")
             //Inserindo No arquivo json 
-            this.userRegister.users.push({ Nome, Email, Senha: this.MD5Encripter(Senha), id })
-
+            this.userRegister.users.push({ Nome, Email, Senha: this.MD5Encripter(Senha), id, Avatar: "http://localhost:4000/picture/" + TempName, UserName })
+            TempName = ""
             this.WriteingInFile(this.path.join(__dirname, "../src/User/user.json"), this.userRegister)
 
             res.status(200).json({ "message": "usuario cadastrado" })
