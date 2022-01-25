@@ -7,8 +7,8 @@ module.exports = class Cadastrar {
 
     PostarPostagem(req, res, Name) {
         try {
+            console.log(req.body)
             const { Descricao } = req.body
-
             this.POstagemRegister.Postagem.push({ Descrição: Descricao, Foto: "http://localhost:4000/picture/" + Name })
 
             this.WriteingInFile(this.path.join(__dirname, '../src/Postagem/Postagem.json'), this.POstagemRegister)
