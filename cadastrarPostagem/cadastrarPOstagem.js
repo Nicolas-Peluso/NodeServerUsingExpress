@@ -4,16 +4,16 @@ module.exports = class Cadastrar {
         this.POstagemRegister = require("../src/Postagem/Postagem.json")
         this.usersRegister = require("../src/User/user.json")
         this.path = require("path")
+
+        this.IteratorObj = require("../helper/PercorrerElementos.js")
+        this.Iterator = new this.IteratorObj()
     }
 
     PostarPostagem(req, res, Name) {
         try {
             const { Descricao, Id } = req.body
 
-            let UserPoster = this.usersRegister.users.reduce((acc, curr) => {
-                curr.id == Id ? acc["User"] = [{ avatar: curr.Avatar, Author: curr.UserName }] : null
-                return acc
-            }, { User: null })
+            let UserPoster = this.Iterator.VerificarSeOIdPertenceAoUsuarioQueFezAPostegem(this.usersRegister.users, Id)
 
             this.POstagemRegister.Postagem.push({
                 Descrição: Descricao,
@@ -41,11 +41,7 @@ module.exports = class Cadastrar {
             const { Author } = req.body
             if (Author == undefined || Author == "") throw new Error("Houve um problema na leitura verifique os dados enviados e tente novamente")
 
-            const PostsForUser = this.POstagemRegister.Postagem.reduce((acc, cur) => {
-                cur.UserPoster[0].Author === Author ? acc.push(cur) : null
-                console.log(acc)
-                return acc
-            }, [])
+            const PostsForUser = this.Iterator.VerificarSeAsPOstagensSaoDeUmAuthor(this.POstagemRegister.Postagem, Author)
 
             if (PostsForUser.length)
                 res.json({
@@ -65,16 +61,9 @@ module.exports = class Cadastrar {
             const { Author, Nome } = req.body
             if (Author === undefined || Nome === undefined) throw new Error("Algum dos campos estao vazios")
 
-            const PostagePertenceAoUsuario = this.POstagemRegister.Postagem.reduce((acc, cur, Index) => {
-                if (Nome == cur.Name) {
-                    if (Author == cur.UserPoster[0].Author) {
-                        acc.Pertence = true
-                        this.POstagemRegister.Postagem.splice(Index)
-                    }
-                }
-                return acc
-            }, { Pertence: false })
-            if (PostagePertenceAoUsuario.Pertence === false) throw new Error("A postagem nao Pertence ao usuario Ou nao")
+            const PostagePertenceAoUsuario = this.Iterator.VerifciaSeAPostagemPertenceAoUsuarioAfimDeDeletala(this.POstagemRegister.Postagem, Author, Nome);
+
+            if (PostagePertenceAoUsuario.Pertence === false) throw new Error("A postagem nao Pertence ao usuario Ou nao Existe")
 
             this.WriteingInFile(this.path.join(__dirname, '../src/Postagem/Postagem.json'), this.POstagemRegister)
             res.json({ "message": "POstagem Deletada com Sucesso" })

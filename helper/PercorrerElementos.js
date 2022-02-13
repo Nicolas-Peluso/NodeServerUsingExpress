@@ -27,9 +27,9 @@ module.exports = class PercorrerElementos {
         let VerificationEdit = Lista.reduce((acc, cur, index) => {
             cur.Email == Email ? acc.Email = cur.Email : null
             this.MD5Encripter(Senha) == cur.Senha ? acc.Senha = this.MD5Encripter(cur.Senha) : null
-            acc.Index = index
+            if (acc.Email && acc.Senha && acc.Index === null) acc.Index = index
             return acc
-        }, { Email: null, Senha: null, newSenha: this.MD5Encripter(NewSenha), newEmail: NewEmail })
+        }, { Email: null, Senha: null, newSenha: this.MD5Encripter(NewSenha), newEmail: NewEmail, Index: null })
 
         return VerificationEdit
     }
@@ -38,9 +38,42 @@ module.exports = class PercorrerElementos {
         let Delete = Lista.reduce((acc, cur, Index) => {
             cur.Email == Email ? acc.Email = Email : null
             cur.Senha == this.MD5Encripter(Senha) ? acc.Senha = Senha : null
-            if (acc.Email && acc.Senha) acc.Index = Index
+            if (acc.Email && acc.Senha, acc.Index === null) acc.Index = Index
             return acc
-        }, { Email: null, Senha: null })
+        }, { Email: null, Senha: null, Index: null })
         return Delete
+    }
+
+    VerificarSeOIdPertenceAoUsuarioQueFezAPostegem(Lista, Id) {
+        let PertenceId = Lista.reduce((acc, curr) => {
+            curr.id == Id ? acc["User"] = [{ avatar: curr.Avatar, Author: curr.UserName }] : null
+            return acc
+        }, { User: null })
+        return PertenceId
+    }
+
+    VerificarSeAsPOstagensSaoDeUmAuthor(Lista, Author) {
+        let PertencePOst = Lista.reduce((acc, cur) => {
+            cur.UserPoster[0].Author === Author ? acc.push(cur) : null
+            console.log(acc)
+            return acc
+        }, [])
+        return PertencePOst
+    }
+
+    VerifciaSeAPostagemPertenceAoUsuarioAfimDeDeletala(Lista, Author, Nome) {
+        let PeretencePOstagem = Lista.reduce((acc, cur, Index) => {
+            if (Nome == cur.Name) {
+                console.log(Author == cur.UserPoster[0].Author)
+                console.log(Index)
+                if (Author == cur.UserPoster[0].Author) {
+                    acc.Pertence = true
+                    Lista.splice(Index, 1)
+                }
+            }
+            return acc
+        }, { Pertence: false })
+
+        return PeretencePOstagem
     }
 }
