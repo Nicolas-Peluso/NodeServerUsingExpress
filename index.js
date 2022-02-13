@@ -60,7 +60,7 @@ const Postagem = new PostagemCadastro(WriteingInFile)
 
 //Class Login
 const Login = require("./LoginUSer/Login.js")
-const LoginUser = new Login(JsonWebToken)
+const LoginUser = new Login(JsonWebToken, WriteingInFile)
 
 //COnfigurando Padrao
 app.use(express.json())
@@ -73,8 +73,6 @@ app.use(express.static("public"))
 //Rotas
 //Criar um usuario
 app.post("/user/register", Upload.single("Avatar"), (req, res) => {
-    //Definindo o tipo de Conteudo que deve ser recebido aqui
-    res.contentType("application/json")
     //Definindo qual aplicação pode fazer requisições nesse caso qualquer uma
     res.header("Access-Control-Allow-Origin", "*")
     //Recebndo os parametros em forma de json da requisição
@@ -98,17 +96,28 @@ app.delete("/user/delete", (req, res) => {
 
 //Postagens Rotas
 app.post("/postagem", JWTVerify, Upload.single("foto"), (req, res, next) => {
-
     Postagem.PostarPostagem(req, res, TempName)
+})
+
+app.delete("/postagem/Delete", JWTVerify, (req, res) => {
+    Postagem.DeletePostagem(req, res)
 })
 
 app.get("/postagem/get", (req, res) => {
     Postagem.SendPostagens(res)
 })
 
+app.post("/postagem/User", (req, res) => {
+    Postagem.SendPOstagensByUser(req, res)
+})
+
 //USerLogin
 app.post("/login", (req, res) => {
     LoginUser.LoginValidete(req, res)
+})
+
+app.get("/get/user", JWTVerify, (req, res) => {
+    LoginUser.LoginWithToken(req, res)
 })
 
 app.listen(Port, () => {
